@@ -1,0 +1,132 @@
+/* *{
+  box-sizing: border-box;
+}
+.login-container{
+  display: flex;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  margin: 130px 360px;
+  width: 100%;
+  height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+}
+  
+.instagram-logo{
+  width: 175px;
+  height: 89px;
+  margin: 10px 0;
+
+}   
+.box-1{
+  height: 400px;
+  width: 350px;
+  border: 1px solid rgb(219, 219, 219);
+}
+.fb-box{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+   justify-content: center;
+}
+.fb-icon{
+  height: 22px;
+}
+.fb-link{
+  margin-left: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #385185;
+}
+.forgotten-password-box{
+ 
+  cursor: pointer;
+  color: #385185;
+  
+}
+
+.install{
+  display: flex;
+  flex-direction: row;
+  margin: -20px ;
+ 
+}
+.playstore-logo{
+  width: 139px;
+  height: 93px;
+  margin: 18px -40px ;
+}
+
+.appstore-logo{
+  width: 275px;
+  height: 129px;
+  margin-left: -100px;
+
+}
+.box-2{
+  height: 63px;
+  width: 350px;
+  border: 1px solid rgb(219, 219, 219);
+  background-color: rgb(255,255,255);
+  margin: 10px 0;
+}
+input{
+  background-color: rgb(250, 250, 250);
+  font-size: 400;
+  list-style: 18px;
+  font-size: 13px;
+  padding: 7px 0 7px 8px;
+  height: 36px;
+  width: 260px;
+  border: 0;
+  outline: none;
+  
+}
+.input-box{
+  margin-top: -10px;
+}
+.input-box1{
+  margin: 15px 0;
+}
+.login-button{
+  border-radius: 4px;
+  background-color: #0095f6;
+  color: rgb(255,255,255);
+  width: 268px;
+  padding: 5px 9px;
+}
+.lines-box{
+  margin: 20px;
+  margin-left: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 10px;
+  font-size: 13px;
+  color: #8e8e8e;
+  font-weight: bold;
+
+}
+.line-1{
+  width: 106px;
+  height: 1px;
+  background-color: #dbdbdb;
+  
+
+}
+.line-2{
+  width: 106px;
+  height: 1px;
+  background-color: #dbdbdb;
+  
+
+}
+.or-box{
+  margin:0 10px 0 10px;
+  
+}
+.sign-up-span{
+  color: #385185;
+  cursor: pointer;
+} */
