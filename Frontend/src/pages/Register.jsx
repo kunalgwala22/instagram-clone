@@ -1,32 +1,86 @@
-
-import React from 'react'
-import { Form, Input } from 'antd'
-import '../styles/RegisterStyles.css'
-import {Link} from 'react-router-dom'
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
-  const onfinishHandler =(values)=>{
-    console.log(values);
-  }
-  return (
-    <div className="form-container">
-    <Form layout='verticle' onFinish={onfinishHandler} className='register-form'>
-      <h1 className='text-center '> Register Form</h1>
-      <Form.Item label='Name' name='name'> 
-        <Input type='text' required/>
-      </Form.Item>
-      <Form.Item label='Email' name='email'>
-        <Input type='email' required/>
-      </Form.Item>
-      <Form.Item label='Password' name='password'>
-        <Input type='password' required/>
-      </Form.Item>
-      <Link to='/login' className='m-2'>Already user login here</Link>
-      <button type='submit' className='btn btn-primary'>Register</button>
-    </Form>
+    const [formData, setFormData] = useState({
+        username: '',
+        email: '',
+        password: '',
+    });
 
-  </div>
-  )
-}
+    const navigate = useNavigate();
 
-export default Register
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('http://localhost:8080/api/v1/user/register', formData);
+            console.log('Registration Success:', response.data);
+            // Optionally redirect to login page after successful registration
+            navigate('/login');
+        } catch (error) {
+            console.error('Registration Error:', error);
+        }
+    };
+
+    return (
+        <div className="d-flex justify-content-center align-items-center vh-100">
+            <div className="card" style={{ width: '400px' }}>
+                <div className="card-body">
+                    <h2 className="card-title text-center">Registration Form</h2>
+                    <form onSubmit={handleSubmit}>
+                        <div className="mb-3">
+                            <label className="form-label">Username:</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                name="username"
+                                value={formData.username}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label className="form-label">Email:</label>
+                            <input
+                                type="email"
+                                className="form-control"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label className="form-label">Password:</label>
+                            <input
+                                type="password"
+                                className="form-control"
+                                name="password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <button type="submit" className="btn btn-primary w-100">Register</button>
+                    </form>
+                    <div className="mt-3 text-center">
+                        <button className="btn btn-link" onClick={() => navigate('/login')}>
+                            Already have an account? Login
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default Register;
