@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { message } from  'antd'
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -22,11 +23,22 @@ const Login = () => {
 
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8080/api/v1/user/login', formData);
+            const response = await axios.post('http://localhost:8080/api/v1/user/login', formData,{
+                headers:{
+                     'Content-Type': 'application/json'
+                },
+                withCredentials:true
+            });
             console.log('Login Success:', response.data);
+            if(response.data.success){
+                message.success(response.data.message)
+                navigate( '/');
+            }
+            
             // Handle successful login (e.g., redirect to a dashboard)
         } catch (error) {
             console.error('Login Error:', error);
+            message.error(error.response.data.message)
         }
     };
 

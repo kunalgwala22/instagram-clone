@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { message } from 'antd';
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -22,12 +23,21 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8080/api/v1/user/register', formData);
+            const response = await axios.post('http://localhost:8080/api/v1/user/register', formData,{
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                withCredentials:true
+            });
             console.log('Registration Success:', response.data);
-            // Optionally redirect to login page after successful registration
-            navigate('/login');
+            if(response.data.success){
+                navigate('/login')
+                message.success(response.data.message)
+            }
+            
         } catch (error) {
             console.error('Registration Error:', error);
+            message.error(error.response.data.message);
         }
     };
 
