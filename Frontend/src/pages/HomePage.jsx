@@ -4,7 +4,7 @@ const HomePage = () => {
   return (
     <div>
 <div>
-  <SideNavbar/>
+  {/* <SideNavbar/> */}
 </div>
 <div>HomePage</div>
     </div>

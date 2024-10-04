@@ -1,9 +1,47 @@
-import React from 'react'; // For any custom styling (minimal)
+import React from 'react'; 
+import axios from 'axios';
+import  '../src/styles/sideBar.css'// For any custom styling (minimal)
+import {Heart, Home, LogOut, MessageCircle, PlusSquare, Search, Stamp, TrendingUp} from 'lucide-react'
+import { message } from  'antd'
+import { useNavigate } from 'react-router-dom';
+const leftSideItem =[
+  { icon:<Home />, text:'Home'},
+  { icon:<Search />, text:'Search'},
+  { icon:<TrendingUp />, text:'Explore'},
+  { icon:<MessageCircle />, text:'Message'},
+  { icon:<Heart/>, text:'Notification'},
+  { icon:<PlusSquare />, text:'Create'},
+  {
+    icon:<Stamp/>,text:'Profile'
+  },
+  { icon:<LogOut />, text:'Logout'}
+  
+]
 
 const SideNavbar = () => {
+  const navigate= useNavigate()
+
+  const logoutHandler=async () =>{
+    try {
+       const res = await axios.get('http://localhost:5500/api/v1/user/logout', {withCredientials:true})
+      if(res.data.success){
+        navigate('/login')
+        message.success(res.data.message);
+      }
+    } catch (error) {
+      console.log(error)
+      message.error(error.response.data.message)
+    }
+  }
+  const sidebarHandler = (textType)=>{
+    if(textType=='Logout' ){
+      logoutHandler()
+    }
+  }
+
   return (
     <div className="d-flex flex-column flex-shrink-0 p-3 bg-light" style={{ width: '250px', height: '100vh' }}>
-      <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+            <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
           alt="Instagram Logo"
@@ -14,50 +52,18 @@ const SideNavbar = () => {
         <span className="fs-4">Instagram</span>
       </a>
       <hr />
-      <ul className="nav nav-pills flex-column mb-auto">
-        <li className="nav-item">
-          <a href="#" className="nav-link active">
-            <i className="bi bi-house-door-fill me-2"></i> Home
-          </a>
-        </li>
-        <li>
-          <a href="#" className="nav-link text-dark">
-            <i className="bi bi-search me-2"></i> Search
-          </a>
-        </li>
-        <li>
-          <a href="#" className="nav-link text-dark">
-            <i className="bi bi-compass me-2"></i> Explore
-          </a>
-        </li>
-        <li>
-          <a href="#" className="nav-link text-dark">
-            <i className="bi bi-film me-2"></i> Reels
-          </a>
-        </li>
-        <li>
-          <a href="#" className="nav-link text-dark">
-            <i className="bi bi-chat-dots me-2"></i> Messages
-          </a>
-        </li>
-        <li>
-          <a href="#" className="nav-link text-dark">
-            <i className="bi bi-bell me-2"></i> Notifications
-          </a>
-        </li>
-        <li>
-          <a href="#" className="nav-link text-dark">
-            <i className="bi bi-person-circle me-2"></i> Profile
-          </a>
-        </li>
-        <li>
-          <a href="/login" className="nav-link text-dark">
-            <i className="bi bi-box-arrow-right"></i> Logout
-          </a>
-        </li>
-      </ul>
-      <hr />
-    </div>
+    {
+      leftSideItem.map((item,index)=>{
+        return (
+          <div   onClick={()=>{sidebarHandler(item.text)}} key={index} className='d-flex
+           align-items-center gap-3 position-relative hover-bg-light cursor-pointer rounded my-3'>
+            {item.icon}
+            <span>{item.text}</span>
+          </div>
+        )
+      })
+}
+      </div>
   );
 };
 
