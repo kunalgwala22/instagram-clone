@@ -23,7 +23,12 @@ const SideNavbar = () => {
 
   const logoutHandler=async () =>{
     try {
-       const res = await axios.get('http://localhost:5500/api/v1/user/logout', {withCredientials:true})
+       const res = await axios.get('http://localhost:5500/api/v1/user/logout',{
+        headers:{
+             'Content-Type': 'application/json'
+        },
+        withCredentials:true
+    })
       if(res.data.success){
         navigate('/login')
         message.success(res.data.message);
