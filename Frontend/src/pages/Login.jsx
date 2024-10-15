@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { message } from  'antd'
+import { useDispatch } from 'react-redux';
+import { login } from '../redux/authSlice';
+
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -10,7 +13,7 @@ const Login = () => {
     });
 
     const navigate = useNavigate();
-
+     const dispatch = useDispatch()
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -24,15 +27,17 @@ const Login = () => {
         e.preventDefault();
         try {
             const response = await axios.post('http://localhost:5500/api/v1/user/login', formData,{
-                headers:{
-                     'Content-Type': 'application/json'
-                },
+                // headers:{
+                //      'Content-Type': 'application/json'
+                // },
                 withCredentials:true
             });
             console.log('Login Success:', response.data);
             if(response.data.success){
-                message.success(response.data.message)
+                dispatch(login(response.data.user))
                 navigate( '/');
+                message.success(response.data.message)
+                
             }
             
             // Handle successful login (e.g., redirect to a dashboard)

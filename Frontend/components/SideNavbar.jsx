@@ -4,23 +4,14 @@ import  '../src/styles/sideBar.css'// For any custom styling (minimal)
 import {Heart, Home, LogOut, MessageCircle, PlusSquare, Search, Stamp, TrendingUp} from 'lucide-react'
 import { message } from  'antd'
 import { useNavigate } from 'react-router-dom';
-const leftSideItem =[
-  { icon:<Home />, text:'Home'},
-  { icon:<Search />, text:'Search'},
-  { icon:<TrendingUp />, text:'Explore'},
-  { icon:<MessageCircle />, text:'Message'},
-  { icon:<Heart/>, text:'Notification'},
-  { icon:<PlusSquare />, text:'Create'},
-  {
-    icon:<Stamp/>,text:'Profile'
-  },
-  { icon:<LogOut />, text:'Logout'}
-  
-]
+import { useSelector } from 'react-redux';
+
+
 
 const SideNavbar = () => {
   const navigate= useNavigate()
-
+  const {user} =useSelector(store=>store.auth)
+ 
   const logoutHandler=async () =>{
     try {
        const res = await axios.get('http://localhost:5500/api/v1/user/logout',{
@@ -32,6 +23,7 @@ const SideNavbar = () => {
       if(res.data.success){
         navigate('/login')
         message.success(res.data.message);
+
       }
     } catch (error) {
       console.log(error)
@@ -42,8 +34,24 @@ const SideNavbar = () => {
     if(textType=='Logout' ){
       logoutHandler()
     }
+    if(textType=='Message'){
+      navigate('/chat')
+    }
   }
-
+     
+  const leftSideItem =[
+    { icon:<Home />, text:'Home'},
+    { icon:<Search />, text:'Search'},
+    { icon:<TrendingUp />, text:'Explore'},
+    { icon:<MessageCircle />, text:'Message'},
+    { icon:<Heart/>, text:'Notification'},
+    { icon:<PlusSquare />, text:'Create'},
+    {
+      icon:<Stamp/>,text:`${user?.username}`,
+    },
+    { icon:<LogOut />, text:'Logout'}
+    
+  ]
   return (
     <div className="d-flex flex-column flex-shrink-0 p-3 bg-light" style={{ width: '250px', height: '100vh' }}>
             <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
